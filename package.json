@@ -1,0 +1,16 @@
+{
+  "name": "proxy-lambda",
+  "version": "0.0.1",
+  "description": "AWS Lambda to proxy calls to specific host",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "~test": "mocha --watch"
+  },
+  "author": "terma (Artem Stasiuk)",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^4.0.1",
+    "nock": "^9.1.0"
+  }
+}
