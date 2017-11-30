@@ -32,6 +32,8 @@ exports.handler = function(event, context, callback) {
     if (event.requestContext && event.requestContext.path) options.path = event.requestContext.path;
     else options.path = '/';
 
+    if (process.env.PATH_PREFIX) options.path = process.env.PATH_PREFIX + options.path;
+
     // add query string parameters
     if (event.queryStringParameters) {
         var queryString = generateQueryString(event.queryStringParameters);
@@ -52,15 +54,6 @@ exports.handler = function(event, context, callback) {
 
         // The whole response has been received
         response.on('end', function () {
-            // Parse response to json
-            // var jsonResponse = JSON.parse(responseString);
-
-            // var output = {
-            //     status: response.statusCode,
-            //     bodyJson: jsonResponse,
-            //     headers: response.headers
-            // };
-
             callback(null, {
                 statusCode: response.statusCode,
                 body: responseString

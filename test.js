@@ -7,6 +7,10 @@ process.env.TARGET_DOMAIN = 'test.com';
 
 const proxy = require('./index');
 
+beforeEach(function () {
+    delete process.env.PATH_PREFIX;
+});
+
 describe('API Gateway Lambda Proxy', function () {
     it('should show error if event is null', function () {
         let response = void 0;
@@ -59,6 +63,28 @@ describe('API Gateway Lambda Proxy', function () {
         proxy.handler(event, null, function (ignore, response) {
             assert.equal(200, response.statusCode);
             assert.equal('xxx', response.body);
+            a.done();
+            done();
+        });
+    });
+
+    it('should add path prefix if configured', function (done) {
+        const event = {requestContext: {path: '/special/path'}};
+        const a = nock('https://' + process.env.TARGET_DOMAIN).get('/myPrefix/a/special/path').reply(200, 'xxx');
+        process.env.PATH_PREFIX = '/myPrefix/a';
+        proxy.handler(event, null, function (ignore, response) {
+            assert.equal(200, response.statusCode);
+            a.done();
+            done();
+        });
+    });
+
+    it('should add path prefix if configured for root path too', function (done) {
+        const event = {requestContext: {path: '/'}};
+        const a = nock('https://' + process.env.TARGET_DOMAIN).get('/myPrefix/').reply(200, 'xxx');
+        process.env.PATH_PREFIX = '/myPrefix';
+        proxy.handler(event, null, function (ignore, response) {
+            assert.equal(200, response.statusCode);
             a.done();
             done();
         });
