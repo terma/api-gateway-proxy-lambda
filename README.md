@@ -10,3 +10,8 @@ Purpose: lambda to proxy incoming calls to defined host
 * Setup API Gateway resource with ```ANY``` method
   * Enable proxy mode
   
+## Releases
+
+- 0.1.0 support ```process.env.PATH_PREFIX```
+- 0.0.1 initial release  
+  
