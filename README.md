@@ -14,6 +14,12 @@ Purpose: lambda to proxy incoming calls to defined host
   
 ## Releases
 
+#### 0.2.1
+
+- support CORS auto OPTIONS response when ```process.env.CORS_AUTO_OPTIONS = true``` 
+- fix ```event.path``` to ```event.resourcePath```
+- add coverage report
+
 #### 0.2.0 
 - support ```process.env.EXCLUDE_PATH_PREFIX: String``` if defined and path starts from it will be removed before proxy. For example path before proxy ```/Beta/test``` and exclude ```/Beta``` proxied path will be ```/test```
 - fix ```httpMethod``` passing

@@ -1,6 +1,6 @@
 {
   "name": "api-gateway-proxy-lambda",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "AWS Lambda to proxy calls to specific host",
   "main": "index.js",
   "scripts": {
