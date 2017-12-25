@@ -36,6 +36,7 @@ exports.handler = function (event, context, callback) {
     options.headers = event.headers;
 
     if (event.requestContext && event.requestContext.path) options.path = event.requestContext.path;
+    else if (event.requestContext && event.requestContext.resourcePath) options.path = event.requestContext.resourcePath;
     else options.path = '/';
 
     if (process.env.EXCLUDE_PATH_PREFIX && options.path.indexOf(process.env.EXCLUDE_PATH_PREFIX) === 0)
@@ -45,7 +46,7 @@ exports.handler = function (event, context, callback) {
 
     // add query string parameters
     if (event.queryStringParameters) {
-        var queryString = generateQueryString(event.queryStringParameters);
+        const queryString = generateQueryString(event.queryStringParameters);
         if (queryString !== '') {
             options.path += '?' + queryString;
         }
@@ -95,8 +96,8 @@ exports.handler = function (event, context, callback) {
 };
 
 function generateQueryString(params) {
-    var str = [];
-    for (var p in params) {
+    const str = [];
+    for (const p in params) {
         if (params.hasOwnProperty(p)) {
             str.push(encodeURIComponent(p) + '=' + encodeURIComponent(params[p]));
         }

@@ -82,6 +82,14 @@ describe('API Gateway Lambda Proxy', function () {
             assert200(event, a, done);
         });
 
+        // https://github.com/terma/api-gateway-proxy-lambda/issues/1
+        it('should use resourcePath if path not defined', function (done) {
+            const event = {requestContext: {resourcePath: '/Beta/test'}};
+            process.env.EXCLUDE_PATH_PREFIX = '/Beta';
+            const a = nock('http://' + process.env.TARGET_DOMAIN).get('/test').reply(200, 'xxx');
+            assert200(event, a, done);
+        });
+
         it('should proxy and don\'t exclude if not match', function (done) {
             const event = {requestContext: {path: '/Alpha/test'}};
             process.env.EXCLUDE_PATH_PREFIX = '/Beta';
