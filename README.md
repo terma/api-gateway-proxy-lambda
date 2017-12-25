@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/terma/api-gateway-proxy-lambda.svg?branch=master)](https://travis-ci.org/terma/api-gateway-proxy-lambda)
 [![npm version](https://badge.fury.io/js/api-gateway-proxy-lambda.svg)](https://badge.fury.io/js/api-gateway-proxy-lambda)
+[![Coverage Status](https://coveralls.io/repos/github/terma/api-gateway-proxy-lambda/badge.svg?branch=master)](https://coveralls.io/github/terma/api-gateway-proxy-lambda?branch=master)
 
 Purpose: lambda to proxy incoming calls to defined host
 
