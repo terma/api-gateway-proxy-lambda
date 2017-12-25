@@ -4,8 +4,9 @@
   "description": "AWS Lambda to proxy calls to specific host",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "~test": "mocha --watch"
+    "test": "nyc mocha && nyc check-coverage --lines 90 --functions 85 --branches 80",
+    "~test": "mocha --watch",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,9 @@
   "author": "terma (Artem Stasiuk)",
   "license": "MIT",
   "devDependencies": {
+    "coveralls": "^3.0.0",
     "mocha": "^4.0.1",
-    "nock": "^9.1.0"
+    "nock": "^9.1.0",
+    "nyc": "^11.4.1"
   }
 }
