@@ -12,6 +12,33 @@ Purpose: lambda to proxy incoming calls to defined host
 * Setup API Gateway resource with ```ANY``` method
   * Enable proxy mode
   
+## Configuration 
+
+All configuration done by ```env``` properties
+
+- ```TARGET_DOMAIN: string, required``` - target proxy host (exclude protocol)
+- ```TARGET_PORT: number, optional, default 80 for http and 443 for https``` - target proxy port
+- ```CORS: boolean, optional, default false``` - automatically add CORS header to all responses
+- ```CORS_AUTO_OPTIONS: boolean, optional, default false``` - replay on all OPTIONS request correct CORS for all ```*```
+- ```EXCLUDE_PATH_PREFIX: string, optional, default empty``` - very useful for API Gateway, this string will be exclude from start of path. 
+For example you send request to http://x/Stage1/start and want to proxy as http://target/start, just configure that property ```/Stage```
+- ```PATH_PREFIX: string, optional, default empty``` - prefix to add in proxy path
+  
+Configuration example:
+```yaml
+Lambda
+  Type: AWS::Lambda::Function
+  Properties:
+    Environment:
+      Variables:
+        TARGET_DOMAIN: test.com
+        TARGET_PORT: 8080
+        CORS: true
+        CORS_AUTO_OPTIONS: false
+        PATH_PREFIX: abb
+        EXCLUDE_PATH_PREFIX: /Stage1
+```  
+  
 ## Releases
 
 #### 0.2.1
