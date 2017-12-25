@@ -7,6 +7,17 @@
     "test": "mocha",
     "~test": "mocha --watch"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/terma/api-gateway-proxy-lambda"
+  },
+  "keywords": [
+    "nodejs",
+    "aws",
+    "api gateway",
+    "proxy",
+    "lambda"
+  ],
   "author": "terma (Artem Stasiuk)",
   "license": "MIT",
   "devDependencies": {
