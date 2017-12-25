@@ -14,7 +14,7 @@ Purpose: lambda to proxy incoming calls to defined host
   
 ## Configuration 
 
-All configuration done by ```env``` properties
+All configuration done by ```env``` [properties](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lambda-function-environment.html)
 
 - ```TARGET_DOMAIN: string, required``` - target proxy host (exclude protocol)
 - ```TARGET_PORT: number, optional, default 80 for http and 443 for https``` - target proxy port
