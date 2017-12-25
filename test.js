@@ -9,6 +9,7 @@ const proxy = require('./index');
 
 beforeEach(function () {
     delete process.env.CORS;
+    delete process.env.CORS_AUTO_OPTIONS;
     delete process.env.HTTPS;
     delete process.env.PATH_PREFIX;
     delete process.env.EXCLUDE_PATH_PREFIX;
@@ -62,6 +63,31 @@ describe('API Gateway Lambda Proxy', function () {
             proxy.handler(event, null, function (ignore, response) {
                 assert.equal(200, response.statusCode);
                 assert.equal('*', response.headers['Access-Control-Allow-Origin']);
+                a.done();
+                done();
+            });
+        });
+
+        it('should response CORS on OPTIONS if configured', function (done) {
+            const event = {httpMethod: 'OPTIONS'};
+            process.env.CORS_AUTO_OPTIONS = true;
+            proxy.handler(event, null, function (ignore, response) {
+                assert.equal(200, response.statusCode);
+                assert.deepEqual({
+                    'access-control-allow-headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                    'access-control-allow-methods': '*',
+                    'access-control-allow-origin': '*'
+                }, response.headers);
+                done();
+            });
+        });
+
+        it('should not response CORS on OPTIONS if not configured', function (done) {
+            const event = {httpMethod: 'OPTIONS'};
+            const a = nock('http://' + process.env.TARGET_DOMAIN).options('/').reply(200, 'xxx');
+            proxy.handler(event, null, function (ignore, response) {
+                assert.equal(200, response.statusCode);
+                assert.equal(void 0, response.headers);
                 a.done();
                 done();
             });

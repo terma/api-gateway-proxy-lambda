@@ -27,6 +27,19 @@ exports.handler = function (event, context, callback) {
         return;
     }
 
+    if (process.env.CORS_AUTO_OPTIONS && event.httpMethod ==='OPTIONS') {
+        callback(null, {
+            statusCode: 200,
+            headers: {
+                'access-control-allow-headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                'access-control-allow-methods': '*',
+                'access-control-allow-origin': '*'
+            },
+            body: null
+        });
+        return;
+    }
+
     // setup request options and parameters
     const options = {hostname: targetDomain};
     if (event.httpMethod) options.method = event.httpMethod;
@@ -86,10 +99,10 @@ exports.handler = function (event, context, callback) {
 
     request.on('error', function (e) {
         log('problem with request: ' + e.message);
-        context.fail(JSON.stringify({
-            status: 500,
-            bodyJson: e.message
-        }));
+        callback(null, {
+            statusCode: 500,
+            body: e.message
+        });
     });
 
     request.end();
