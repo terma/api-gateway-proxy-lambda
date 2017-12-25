@@ -41,6 +41,10 @@ Lambda
   
 ## Releases
 
+#### 0.2.2
+
+- update docs
+
 #### 0.2.1
 
 - support CORS auto OPTIONS response when ```process.env.CORS_AUTO_OPTIONS = true``` 
